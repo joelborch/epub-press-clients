@@ -6,6 +6,7 @@ This repository is a small multi-package workspace for EpubPress clients: a Chro
 - `packages/epub-press-chrome/`: Chrome extension. UI assets live in `app/` (manifest, popup HTML, styles), extension logic in `scripts/`, tests in `tests/`, and icons in `images/`.
 - `packages/epub-press-js/`: core client library (legacy). Source is `epub-press.js`, bundled output in `build/`, tests in `tests/`.
 - `packages/epub-press-widgets/`: widget bundle (legacy). Entry is `widgets.js`, tests in `tests/`.
+- `packages/local-url-epub/`: Local Python-based command-line utility for compiling web URLs into clean, paywall-free EPUB files using the `agy` CLI as a local AI cleaner.
 - `screenshots/`: marketing and documentation images.
 
 ## Build, Test, and Development Commands
@@ -28,3 +29,15 @@ Run commands from the package you are working in.
 ## Commit & Pull Request Guidelines
 - History shows short, imperative summaries and occasional prefixes like `dep:` for dependency updates; follow that style (e.g., `dep: add cross-env`).
 - PRs should explain the change, list test steps, and link issues. Include screenshots for UI changes in the Chrome extension or widgets.
+
+## Local URL EPUB Workflow
+The `local-url-epub` utility allows compiling a list of web article URLs (e.g. blog posts, NYT opinions, New Yorker pieces) into a single, clean EPUB book.
+- **Run Command:** `/path/to/smart_url_epub.py <urls_file> --title "<book_title>"`
+- **Paywall Bypassing:**
+  - Performs local fetch first; if blocked, falls back to Wayback Machine and GhostArchive.
+  - Queries both `https://` and `http://` versions on Wayback.
+  - If Availability API fails (common due to caching), uses the Wayback **CDX Search API** to fetch the raw indices.
+  - Supports custom fallback mappings (e.g. mapping paywalled NYT opinion pieces to open reprints, or copying identical syndicated content).
+- **AI-Based Cleaning:**
+  - Uses the local `agy` daemon CLI (`agy --print`) to parse fetched HTML, extracting clean article titles and paragraphs.
+  - Implements a pre-cleaning payload cap of 150 blocks to speed up AI parsing and prevent prompt size limits or timeouts.
