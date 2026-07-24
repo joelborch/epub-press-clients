@@ -16,19 +16,10 @@ Run commands from the package you are working in.
 - JS library: `npm start` (watch), `npm run build`, `npm run build-prod`, `npm test` (browser runner), `node tests/nodeTest.js` for Node coverage.
 - Widgets: `npm test` is a placeholder; no build script is defined in `package.json`.
 
-## Coding Style & Naming Conventions
-- Indent with 4 spaces, LF line endings, trim trailing whitespace (see `.editorconfig`).
-- ESLint uses `airbnb` plus repo overrides; run `npx eslint .` from the repo root.
-- Use camelCase for variables/functions, PascalCase for classes (e.g., `ItemWidget`), and `*-test.js` for test files.
-
 ## Testing Guidelines
 - Tests use Mocha + Chai with webpack/mocha-loader in browser packages.
 - Place tests under each package’s `tests/` folder; `tests/index.js` auto-loads files matching `*-test.js`.
 - For node-only checks, use `packages/epub-press-js/tests/nodeTest.js`.
-
-## Commit & Pull Request Guidelines
-- History shows short, imperative summaries and occasional prefixes like `dep:` for dependency updates; follow that style (e.g., `dep: add cross-env`).
-- PRs should explain the change, list test steps, and link issues. Include screenshots for UI changes in the Chrome extension or widgets.
 
 ## Local URL EPUB Workflow
 The `local-url-epub` utility allows compiling a list of web article URLs (e.g. blog posts, NYT opinions, New Yorker pieces) into a single, clean EPUB book.
